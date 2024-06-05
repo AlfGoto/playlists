@@ -1,5 +1,6 @@
 import codes from './codes.js'
 const c = new codes()
+let titles = []
 
 
 document.addEventListener('DOMContentLoaded', async() => {
@@ -36,22 +37,26 @@ async function getPlaylist(id, token){
     ).then(j=>{
         j.items.forEach(elem => {
             trackByTrack(elem.track)  
+
+            if(j.items.indexOf(elem) == j.items.length - 1)createButton()
         });
     
     }).catch(e => console.log(e))
 }
+function createButton(){
+    let b = document.createElement('button')
+    document.getElementById('tracks').appendChild(b)
+    b.innerHTML = 'Create Playlist !'
 
-
-
-
-
-
-async function trackByTrack(arg){
-    console.log(arg)
+    console.log(titles)
+}
+function trackByTrack(arg){
+    // console.log(arg)
+    titles.push({title: arg.name, artist: arg.artists})
 
     let p = document.createElement('p')
     document.getElementById('tracks').appendChild(p)
-    p.innerHTML = arg.name
+    p.innerHTML = arg.name + ' : ' + arg.artists[0].name
 }
 
 
